@@ -241,7 +241,7 @@ export function QuantumSuite() {
               <div className="text-slate-300 mb-1">[✓] Session logging: {systemStatus?.sessionLog?.toUpperCase() || 'SECURE'}</div>
               <div className="text-slate-300 mb-4">[✓] Root access: {systemStatus?.rootAccess?.toUpperCase() || 'VERIFIED'}</div>
               <div className="flex items-center">
-                <span className="text-accent mr-2">quantum></span>
+                <span className="text-accent mr-2">quantum{'>'}</span>
                 <input 
                   type="text" 
                   value={terminalCommand}

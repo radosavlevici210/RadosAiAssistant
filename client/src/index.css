@@ -64,7 +64,8 @@
   }
 
   body {
-    @apply font-sans antialiased bg-gradient-to-br from-rados-dark via-rados-slate-900 to-rados-slate-800 text-slate-200 min-h-screen;
+    @apply font-sans antialiased text-slate-200 min-h-screen;
+    background: linear-gradient(135deg, hsl(219, 39%, 11%) 0%, hsl(220, 13%, 13%) 50%, hsl(217, 19%, 16%) 100%);
     font-family: 'Inter', sans-serif;
   }
 }

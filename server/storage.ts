@@ -77,6 +77,7 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
+      initials: insertUser.initials || "",
       createdAt: new Date() 
     };
     this.users.set(id, user);
@@ -95,6 +96,7 @@ export class MemStorage implements IStorage {
     const chatMessage: ChatMessage = {
       ...message,
       id,
+      model: message.model || null,
       createdAt: new Date()
     };
     this.chatMessages.set(id, chatMessage);
@@ -126,6 +128,10 @@ export class MemStorage implements IStorage {
     const musicProject: MusicProject = {
       ...project,
       id,
+      lyrics: project.lyrics || null,
+      genre: project.genre || null,
+      mood: project.mood || null,
+      voiceStyle: project.voiceStyle || null,
       status: "draft",
       duration: null,
       audioUrl: null,
@@ -160,6 +166,11 @@ export class MemStorage implements IStorage {
     const quantumProject: QuantumProject = {
       ...project,
       id,
+      description: project.description || null,
+      priority: project.priority || "medium",
+      totalTasks: project.totalTasks || 0,
+      dueDate: project.dueDate || null,
+      members: project.members || [],
       progress: 0,
       completedTasks: 0,
       createdAt: new Date()
@@ -189,6 +200,7 @@ export class MemStorage implements IStorage {
     const secureFile: SecureFile = {
       ...file,
       id,
+      watermarked: file.watermarked || false,
       encrypted: true,
       createdAt: new Date()
     };
