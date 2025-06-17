@@ -149,7 +149,7 @@ export function PerformanceBoost() {
         '/static/js/bundle.js',
         '/static/css/main.css'
       ];
-      
+
       await cache.addAll(urlsToCache).catch(() => {});
     }
 
@@ -194,7 +194,7 @@ export function PerformanceBoost() {
 
   const performBoost = useCallback(async () => {
     setIsProcessing(true);
-    
+
     try {
       // Run optimizations in parallel for maximum speed
       const [cpu, memory, network, cache, rendering] = await Promise.all([
@@ -248,7 +248,7 @@ export function PerformanceBoost() {
         overallBoost: 0
       });
       setIsActive(false);
-      
+
       toast({
         title: "Performance Boost Disabled",
         description: "System returned to normal operation"
@@ -306,7 +306,7 @@ export function PerformanceBoost() {
           {isActive && getStatusBadge(metrics.overallBoost)}
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Main Control */}
         <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">

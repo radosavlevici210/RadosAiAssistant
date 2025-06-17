@@ -33,12 +33,12 @@ export function NDAModal({ isOpen, onClose }: NDAModalProps) {
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-white">Non-Disclosure Agreement</DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           <p className="text-slate-300">
             This Non-Disclosure Agreement ("Agreement") is entered into between RADOS Quantum Suite and the accessing party ("Recipient").
           </p>
-          
+
           <div>
             <h3 className="text-white font-semibold mb-2">Confidential Information</h3>
             <p className="text-slate-300">
