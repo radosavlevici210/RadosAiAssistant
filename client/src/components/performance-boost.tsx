@@ -61,28 +61,40 @@ export function PerformanceBoost() {
     // CPU optimization techniques
     if ('requestIdleCallback' in window) {
       window.requestIdleCallback(() => {
-        // Defer non-critical operations
-        const scripts = document.querySelectorAll('script[defer]');
-        scripts.forEach(script => {
-          if (!script.hasAttribute('data-optimized')) {
-            script.setAttribute('data-optimized', 'true');
-          }
-        });
+        // Defer non-critical operations - safer approach
+        try {
+          const scripts = document.querySelectorAll('script[defer]');
+          scripts.forEach(script => {
+            if (!script.hasAttribute('data-optimized')) {
+              script.setAttribute('data-optimized', 'true');
+            }
+          });
+        } catch (e) {
+          // Silent fail for DOM operations
+        }
       });
     }
 
-    // Enable hardware acceleration
-    const style = document.createElement('style');
-    style.textContent = `
-      * {
-        transform: translateZ(0);
-        will-change: transform;
+    // Safe CSS optimization
+    try {
+      const existingStyle = document.getElementById('performance-boost-styles');
+      if (!existingStyle) {
+        const style = document.createElement('style');
+        style.id = 'performance-boost-styles';
+        style.textContent = `
+          .performance-optimized {
+            transform: translateZ(0);
+            will-change: transform;
+          }
+          .animate-fade-in {
+            animation-duration: 0.15s !important;
+          }
+        `;
+        document.head.appendChild(style);
       }
-      .animate-fade-in {
-        animation-duration: 0.15s !important;
-      }
-    `;
-    document.head.appendChild(style);
+    } catch (e) {
+      // Silent fail for style operations
+    }
 
     return 85 + Math.random() * 15; // 85-100%
   }, []);
@@ -102,14 +114,17 @@ export function PerformanceBoost() {
       await Promise.all(oldCaches.map(name => caches.delete(name)));
     }
 
-    // Remove unused event listeners
-    const elements = document.querySelectorAll('*');
-    elements.forEach(el => {
-      const clone = el.cloneNode(true);
-      if (el.parentNode) {
-        el.parentNode.replaceChild(clone, el);
-      }
-    });
+    // Safe memory cleanup without DOM manipulation
+    try {
+      const keys = Object.keys(localStorage);
+      keys.forEach(key => {
+        if (key.includes('temp') || key.includes('old')) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch (e) {
+      // Silent fail for storage operations
+    }
 
     return 75 + Math.random() * 25; // 75-100%
   }, []);
@@ -169,25 +184,39 @@ export function PerformanceBoost() {
   }, []);
 
   const optimizeRendering = useCallback(async () => {
-    // Optimize rendering performance
-    document.documentElement.style.setProperty('--animation-timing', 'linear');
-    document.documentElement.style.setProperty('--transition-timing', 'ease-out');
+    try {
+      // Optimize rendering performance
+      document.documentElement.style.setProperty('--animation-timing', 'linear');
+      document.documentElement.style.setProperty('--transition-timing', 'ease-out');
 
-    // Enable CSS containment
-    const containmentStyle = document.createElement('style');
-    containmentStyle.textContent = `
-      .performance-optimized {
-        contain: layout style paint;
-        transform: translateZ(0);
-        backface-visibility: hidden;
+      // Safe CSS containment
+      const existingContainmentStyle = document.getElementById('containment-styles');
+      if (!existingContainmentStyle) {
+        const containmentStyle = document.createElement('style');
+        containmentStyle.id = 'containment-styles';
+        containmentStyle.textContent = `
+          .performance-optimized {
+            contain: layout style paint;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+          }
+        `;
+        document.head.appendChild(containmentStyle);
       }
-    `;
-    document.head.appendChild(containmentStyle);
 
-    // Apply containment to major containers
-    document.querySelectorAll('main, section, article').forEach(el => {
-      el.classList.add('performance-optimized');
-    });
+      // Apply containment to major containers safely
+      try {
+        document.querySelectorAll('main, section, article').forEach(el => {
+          if (el && !el.classList.contains('performance-optimized')) {
+            el.classList.add('performance-optimized');
+          }
+        });
+      } catch (e) {
+        // Silent fail for DOM operations
+      }
+    } catch (e) {
+      // Silent fail for all rendering optimizations
+    }
 
     return 85 + Math.random() * 15; // 85-100%
   }, []);
