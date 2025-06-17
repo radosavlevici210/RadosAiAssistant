@@ -32,13 +32,17 @@ app.use(compression({
   }
 }));
 
-// Rate limiting
+// Rate limiting with secure configuration for Replit
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 1000, // Limit each IP to 1000 requests per windowMs
   message: 'Too many requests from this IP',
   standardHeaders: true,
   legacyHeaders: false,
+  trustProxy: (ip: string) => {
+    // Trust Replit proxy IPs only
+    return ip === '127.0.0.1' || ip === '::1' || ip.startsWith('10.') || ip.startsWith('172.') || ip.startsWith('192.168.');
+  },
 });
 
 app.use('/api/', limiter);
