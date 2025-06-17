@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "python3 server.py",
-    "start": "python3 server.py"
+    "dev": "python3 main.py",
+    "start": "python3 main.py"
   }
 }
