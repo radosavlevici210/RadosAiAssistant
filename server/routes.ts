@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertChatMessageSchema, insertMusicProjectSchema, insertQuantumProjectSchema, insertSecureMessageSchema } from "@shared/schema";
 import * as openaiService from "./services/openai";
 import * as anthropicService from "./services/anthropic";
+import { getCached, setCached, deleteCached } from "./cache";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -22,10 +23,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Default user ID for demo (in production, this would come from authentication)
   const DEFAULT_USER_ID = 1;
 
-  // AI Assistant Routes
+  // AI Assistant Routes with caching
   app.get("/api/chat/messages", async (req, res) => {
     try {
-      const messages = await storage.getChatMessages(DEFAULT_USER_ID);
+      const cacheKey = `chat_messages_${DEFAULT_USER_ID}`;
+      
+      // Try to get from cache first
+      let messages = await getCached(cacheKey);
+      
+      if (!messages) {
+        messages = await storage.getChatMessages(DEFAULT_USER_ID);
+        // Cache for 30 seconds
+        await setCached(cacheKey, messages, 30);
+      }
+      
       res.json(messages);
     } catch (error) {
       console.error("Error fetching chat messages:", error);
@@ -69,6 +80,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         model: model || "openai",
         userId: DEFAULT_USER_ID
       });
+
+      // Invalidate cache after new message
+      await deleteCached(`chat_messages_${DEFAULT_USER_ID}`);
 
       res.json({ userMessage, assistantMessage });
     } catch (error) {
