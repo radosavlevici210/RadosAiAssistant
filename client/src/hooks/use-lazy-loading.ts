@@ -45,20 +45,3 @@ export function useLazyLoad<T extends HTMLElement>(
 
   return { ref, isIntersecting, hasTriggered };
 }
-
-export function LazyComponent({ 
-  children, 
-  fallback,
-  ...options 
-}: { 
-  children: React.ReactNode; 
-  fallback?: React.ReactNode;
-} & LazyLoadOptions) {
-  const { ref, isIntersecting } = useLazyLoad<HTMLDivElement>(options);
-
-  return (
-    <div ref={ref}>
-      {isIntersecting ? children : fallback}
-    </div>
-  );
-}

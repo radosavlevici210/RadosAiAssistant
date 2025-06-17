@@ -5,9 +5,11 @@ import { RealArtistStudio } from '@/components/realartist-studio';
 import { QuantumSuite } from '@/components/quantum-suite';
 import { PerformanceMonitor } from '@/components/performance-monitor';
 import { SpeedOptimizer } from '@/components/speed-optimizer';
+import { TurboMode } from '@/components/turbo-mode';
+import { PerformanceBoost } from '@/components/performance-boost';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Settings, Zap } from 'lucide-react';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Settings, Zap, Rocket, TrendingUp } from 'lucide-react';
 import type { Module } from '@/lib/types';
 
 export default function Home() {
@@ -51,7 +53,37 @@ export default function Home() {
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
+              <DialogTitle>Speed Optimization</DialogTitle>
+              <DialogDescription>Configure performance settings for maximum speed</DialogDescription>
               <SpeedOptimizer />
+            </DialogContent>
+          </Dialog>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size="sm" variant="destructive" className="gap-2">
+                <Rocket className="h-4 w-4" />
+                TURBO
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogTitle>Turbo Mode</DialogTitle>
+              <DialogDescription>Activate maximum performance mode</DialogDescription>
+              <TurboMode />
+            </DialogContent>
+          </Dialog>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size="sm" variant="secondary" className="gap-2">
+                <TrendingUp className="h-4 w-4" />
+                BOOST
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-lg">
+              <DialogTitle>Performance Boost</DialogTitle>
+              <DialogDescription>Advanced system optimization controls</DialogDescription>
+              <PerformanceBoost />
             </DialogContent>
           </Dialog>
         </div>
